@@ -140,6 +140,4 @@ class controller_livro extends Controller
         return response()->json(['livros' => $resultado], 200);
     }
 
-
-
 }
