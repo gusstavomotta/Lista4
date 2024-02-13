@@ -44,6 +44,7 @@ class controller_livro extends Controller
         } catch (Exception $e) {
             throw new Exception("Não foi possível cadastrar o livro no banco de dados! Erro: " . $e->getMessage());
         }
+
         echo "Cadastro concluído";
     }
     public function buscar_livro($id_livro)
@@ -95,6 +96,7 @@ class controller_livro extends Controller
         try {
             $livro = Livro::findOrFail($id_livro);
             $livro->delete();
+
             echo "Livro excluído com sucesso!";
 
         } catch (Exception $e) {
@@ -105,6 +107,7 @@ class controller_livro extends Controller
     {
 
         $livros = Livro::all();
+
         if (count($livros) == 0) {
             throw new Exception("Banco de dados vazio!");
         }
