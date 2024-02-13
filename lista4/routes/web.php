@@ -14,25 +14,10 @@ Route::post('/cadastrar_livro', [controller_livro::class, 'cadastrar_livro']);
 
 Route::get('/buscar_livro/{id_livro}', [controller_livro::class, 'buscar_livro']);
 
-Route::get('/editar_livro/{id_livro}', function ($id_livro) {
-    $livro = Livro::findOrFail($id_livro);
-    return view('editar_livro', ['livro' => $livro]);
-});
+Route::post('/atualizar_livro/{id_livro}', [controller_livro::class, 'atualizar_livro']);
 
-Route::put('/atualizar_livro/{id_livro}', function (Request $infos_livros, $id_livro) {
-    $livro = Livro::findOrFail($id_livro);
+Route::delete('/excluir_livro/{id_livro}', [controller_livro::class, 'excluir_livro']);
 
-    $livro->id = $infos_livros->id;
-    $livro->titulo = $infos_livros->titulo;
-    $livro->autor = $infos_livros->autor;
-    $livro->data_lancamento = $infos_livros->data_lancamento;
-    $livro->num_paginas = $infos_livros->num_paginas;
-    $livro->genero = $infos_livros->genero;
-    $livro->save();
-    echo "Livro atualizado!";
+Route::get('/listar_livros', [controller_livro::class, 'listar_livros']);
 
-});
-
-Route::get('/listar_livro', function () {
-    return view('home');
-});
+// Route::get('/listar_livros_com_filtros', [controller_livro::class, 'listar_livros_com_filtros']);

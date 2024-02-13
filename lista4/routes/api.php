@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\controller_livro;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,3 +18,19 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::post('/cadastrar_livro', [controller_livro::class, 'cadastrar_livro']);
+
+Route::get('/buscar_livro/{id_livro}', [controller_livro::class, 'buscar_livro']);
+
+// Route::get('/editar_livro/{id_livro}', [controller_livro::class, 'editar_livro']);
+
+Route::post('/atualizar_livro/{id_livro}', [controller_livro::class, 'atualizar_livro']);
+
+Route::delete('/excluir_livro/{id_livro}', [controller_livro::class, 'excluir_livro']);
+
+// Route::get('/excluir_livro/{id_livro}', [controller_livro::class, 'excluir_livro']);
+
+Route::get('/listar_livros', [controller_livro::class, 'listar_livros']);
+
+Route::get('/listar_livros_com_filtros', [controller_livro::class, 'listar_livros_com_filtros']);
