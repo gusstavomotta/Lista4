@@ -31,11 +31,6 @@ class controller_livro extends Controller
             throw new Exception("Os dados inseridos são inválidos! Erro: " . $e->getMessage());
         }
         try {
-            $generos_permitidos = ['Romance', 'Clássico', 'Ficção', 'Mistério', 'Ação', 'Drama'];
-
-            if (!in_array($infos_livros->genero, $generos_permitidos)) {
-                throw new Exception("Gênero inválido. Os gêneros permitidos são: Romance, Clássico, Ficção, Mistério, Ação e Drama");
-            }
 
             Livro::create([
                 'id' => $infos_livros->id,
@@ -119,31 +114,32 @@ class controller_livro extends Controller
 
     public function filtrar_livros(Request $request)
     {
-        $livro = Livro::query();
+        $livros = Livro::query();
 
         if ($request->has('titulo')) {
-            $livro->where('titulo', 'LIKE', '%' . $request->titulo . '%');
+            $livros->where('titulo', 'LIKE', '%' . $request->titulo . '%');
         }
 
         if ($request->has('autor')) {
-            $livro->where('autor', 'LIKE', '%' . $request->autor . '%');
+            $livros->where('autor', 'LIKE', '%' . $request->autor . '%');
         }
 
         if ($request->has('genero')) {
-            $livro->where('genero', 'LIKE', '%' . $request->genero . '%');
+            $livros->where('genero', 'LIKE', '%' . $request->genero . '%');
         }
 
         if ($request->has('data_inicial')) {
-            $livro->where('data_publicacao', '>=', $request->data_inicial);
+            $livros->where('data_lancamento', '>=', $request->data_inicial);
         }
 
         if ($request->has('data_final')) {
-            $livro->where('data_publicacao', '<=', $request->data_final);
+            $livros->where('data_lancamento', '<=', $request->data_final);
         }
 
-        $resultado = $livro->get();
-        return response()->json($resultado);
+        $resultado = $livros->get();
+        return response()->json(['livros' => $resultado], 200);
     }
+
 
 
 }
