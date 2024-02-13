@@ -10,11 +10,13 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use League\Flysystem\UrlGeneration\TemporaryUrlGenerator;
 use PhpParser\Node\Stmt\Echo_;
+use Symfony\Component\HttpKernel\Attribute\WithLogLevel;
 
 class controller_livro extends Controller
 {
     public function cadastrar_livro(Request $infos_livros)
     {
+
         try {
             $infos_livros->validate([
                 'id' => 'integer',
@@ -28,7 +30,6 @@ class controller_livro extends Controller
         } catch (Exception $e) {
             throw new Exception("Os dados inseridos são inválidos! Erro: " . $e->getMessage());
         }
-
         try {
             $generos_permitidos = ['Romance', 'Clássico', 'Ficção', 'Mistério', 'Ação', 'Drama'];
 
@@ -94,7 +95,6 @@ class controller_livro extends Controller
         }
 
     }
-
     public function excluir_livro($id_livro)
     {
         try {
@@ -119,7 +119,31 @@ class controller_livro extends Controller
 
     public function filtrar_livros(Request $request)
     {
+        $livro = Livro::query();
 
+        if ($request->has('titulo')) {
+            $livro->where('titulo', 'LIKE', '%' . $request->titulo . '%');
+        }
 
+        if ($request->has('autor')) {
+            $livro->where('autor', 'LIKE', '%' . $request->autor . '%');
+        }
+
+        if ($request->has('genero')) {
+            $livro->where('genero', 'LIKE', '%' . $request->genero . '%');
+        }
+
+        if ($request->has('data_inicial')) {
+            $livro->where('data_publicacao', '>=', $request->data_inicial);
+        }
+
+        if ($request->has('data_final')) {
+            $livro->where('data_publicacao', '<=', $request->data_final);
+        }
+
+        $resultado = $livro->get();
+        return response()->json($resultado);
     }
+
+
 }

@@ -23,14 +23,10 @@ Route::post('/cadastrar_livro', [controller_livro::class, 'cadastrar_livro']);
 
 Route::get('/buscar_livro/{id_livro}', [controller_livro::class, 'buscar_livro']);
 
-// Route::get('/editar_livro/{id_livro}', [controller_livro::class, 'editar_livro']);
-
 Route::post('/atualizar_livro/{id_livro}', [controller_livro::class, 'atualizar_livro']);
 
 Route::delete('/excluir_livro/{id_livro}', [controller_livro::class, 'excluir_livro']);
 
-// Route::get('/excluir_livro/{id_livro}', [controller_livro::class, 'excluir_livro']);
-
 Route::get('/listar_livros', [controller_livro::class, 'listar_livros']);
 
-Route::get('/listar_livros_com_filtros', [controller_livro::class, 'listar_livros_com_filtros']);
+Route::get('/filtrar_livros/{coluna}', [controller_livro::class, 'filtrar_livros']);

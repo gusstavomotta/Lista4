@@ -20,4 +20,4 @@ Route::delete('/excluir_livro/{id_livro}', [controller_livro::class, 'excluir_li
 
 Route::get('/listar_livros', [controller_livro::class, 'listar_livros']);
 
-// Route::get('/listar_livros_com_filtros', [controller_livro::class, 'listar_livros_com_filtros']);
+Route::get('/filtrar_livros/{coluna}', [controller_livro::class, 'filtrar_livros']);
