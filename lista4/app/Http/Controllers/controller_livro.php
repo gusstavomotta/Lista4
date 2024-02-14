@@ -119,28 +119,34 @@ class controller_livro extends Controller
     {
         $livros = Livro::query();
 
-        if ($request->has('titulo')) {
-            $livros->where('titulo', 'LIKE', '%' . $request->titulo . '%');
+        try {
+            if ($request->has('titulo')) {
+                $livros->where('titulo', 'LIKE', '%' . $request->titulo . '%');
+            }
+
+            if ($request->has('autor')) {
+                $livros->where('autor', 'LIKE', '%' . $request->autor . '%');
+            }
+
+            if ($request->has('genero')) {
+                $livros->where('genero', 'LIKE', '%' . $request->genero . '%');
+            }
+
+            if ($request->has('data_inicial')) {
+                $livros->where('data_lancamento', '>=', $request->data_inicial);
+            }
+
+            if ($request->has('data_final')) {
+                $livros->where('data_lancamento', '<=', $request->data_final);
+            }
+
+            $resultado = $livros->get();
+            return response()->json(['livros' => $resultado], 200);
+
+        } catch (Exception $e) {
+            throw new Exception("O parâmetro ou valor passados não correspondem à nenhuma coluna ou valor do banco de dados, insira novamente. Código do erro: " . $e->getMessage());
         }
 
-        if ($request->has('autor')) {
-            $livros->where('autor', 'LIKE', '%' . $request->autor . '%');
-        }
-
-        if ($request->has('genero')) {
-            $livros->where('genero', 'LIKE', '%' . $request->genero . '%');
-        }
-
-        if ($request->has('data_inicial')) {
-            $livros->where('data_lancamento', '>=', $request->data_inicial);
-        }
-
-        if ($request->has('data_final')) {
-            $livros->where('data_lancamento', '<=', $request->data_final);
-        }
-
-        $resultado = $livros->get();
-        return response()->json(['livros' => $resultado], 200);
     }
 
 }
